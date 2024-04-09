@@ -17,6 +17,7 @@ export class MediaImage extends DDD {
         super();
         this.src = '';
         this.alt = '';
+        this.caption = '';
         this.width = '';
         this.height = '';
         this.primaryColor = '';
@@ -40,19 +41,24 @@ export class MediaImage extends DDD {
 
     render() {
         return html`
-            <img src="${this.src}" alt="${this.alt}" class='media-img'>
+            <img src='${this.src}' alt='${this.alt}' class='media-img'>
         `
     }
+
+    // make methods for adding classes based on attributes, such as width, height, and colors
 
     static get properties() {
         return {
             ...super.properties,
-            src: { String },
-            alt: { String },
-            width: { Number },
-            height: { Number },
-            primaryColor: { String },
-            secondaryColor: { String },
+            src: { type: String },
+            alt: { type: String },
+            caption: { type: String },
+            width: { type: Number },
+            height: { type: Number },
+            primaryColor: { type: String },
+            secondaryColor: { type: String },
         }
     }
 }
+
+globalThis.customElements.define(MediaImage.tag, MediaImage);

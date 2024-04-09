@@ -6,10 +6,10 @@ import { css, html } from 'lit';
  * @author {Zach Dodson}
  */
 
-export class HaxImageGallery extends DDD {
+export class ImageGallery extends DDD {
     
     static get tag() {
-        return 'hax-image-gallery';
+        return 'image-gallery';
     }
 
     constructor() {
@@ -32,7 +32,9 @@ export class HaxImageGallery extends DDD {
     }
 
     render() {
-        
+        return html`
+            <slot></slot>
+        `
     }
 
     static get properties() {
@@ -42,4 +44,4 @@ export class HaxImageGallery extends DDD {
     }
 }
 
-globalThis.customElements.define(HaxImageGallery.tag, HaxImageGallery);
+globalThis.customElements.define(ImageGallery.tag, ImageGallery);

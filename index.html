@@ -7,15 +7,21 @@
   <meta name="Description" content="Boilerplate for polaris chip">
   <base href="/">
   <title>HAX-IMAGE-GALLERY</title>
+  <link rel="icon" href="./images/hax-icon.png">
 </head>
 
 <body>
-  <hax-image-gallery>
+  <image-gallery>
     <h1>Welcome to <em>hax-image-gallery</em> demonstration!</h1>
-  </hax-image-gallery>
+    <div>
+      <p>By utilizing lit element I am able to create <b>custom</b> HTML tags, which unleashes unlimited possibilities of custom widgets that can be created by anyone!</p>
+      <media-image src="https://miro.medium.com/v2/resize:fit:1100/format:webp/1*GI-td9gs8D5OKZd19mAOqA.png" alt="A hot fresh meme"></media-image>
+    </div>
+  </image-gallery>
 
-  <script src="./src/media-image.js"></script>
-  <script src="./src/hax-image-gallery.js"></script>
+
+  <script type="module" src="./src/media-image.js"></script>
+  <script type="module" src="./src/image-gallery.js"></script>
 </body>
 
 </html>
