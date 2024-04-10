@@ -17,11 +17,10 @@ export class MediaImage extends DDD {
         super();
         this.src = '';
         this.alt = '';
+        this.width = 512;
         this.caption = '';
-        this.width = '';
-        this.height = '';
-        this.primaryColor = '';
-        this.secondaryColor = '';
+        this.primaryColor = '--ddd-theme-default-original87Pink'; // utilize ddd
+        this.secondaryColor = '--ddd-theme-default-coalyGray'; // utilize ddd
     }
 
     static get styles() {
@@ -34,14 +33,28 @@ export class MediaImage extends DDD {
                 https://oer.hax.psu.edu/bto108/sites/haxcellence/documentation/ddd 
                 */
 
+                /* .media-img {
+                    width: 512px;
+                } */
 
+                :host([roundCorner = true]) img {
+                    border-radius: 25px;
+                }
+
+                /* how can I incorporate constructor variables into CSS???*/
             `
         ]
     }
 
     render() {
         return html`
-            <img src='${this.src}' alt='${this.alt}' class='media-img'>
+            <img src='${this.src}' alt='${this.alt}' class='media-img' 
+            style='
+                width: ${this.width}px;
+                border-style: solid;
+                border-color: var(${this.primaryColor});
+                
+            '>
         `
     }
 
@@ -52,11 +65,21 @@ export class MediaImage extends DDD {
             ...super.properties,
             src: { type: String },
             alt: { type: String },
-            caption: { type: String },
             width: { type: Number },
-            height: { type: Number },
-            primaryColor: { type: String },
-            secondaryColor: { type: String },
+            caption: { type: String },
+            primaryColor: { 
+                type: String,
+                attribute: 'primary-color',
+            },
+            secondaryColor: { 
+                type: String,
+                attribute: 'secondary-color',
+            },
+            roundCorner: {
+                type: Boolean,
+                attribute: 'round-corner',
+                reflect: false,
+            }
         }
     }
 }
