@@ -14,6 +14,7 @@ export class ImageGallery extends DDD {
 
     constructor() {
         super();
+        this.images = [];
     }
 
     static get styles() {
@@ -35,6 +36,10 @@ export class ImageGallery extends DDD {
         return html`
             <slot></slot>
         `
+    }
+
+    collectMediaImages() {
+        
     }
 
     static get properties() {

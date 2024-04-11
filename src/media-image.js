@@ -16,11 +16,12 @@ export class MediaImage extends DDD {
     constructor() {
         super();
         this.src = '';
-        this.alt = '';
         this.width = 512;
         this.caption = '';
+        this.description = ''
         this.primaryColor = '--ddd-theme-default-original87Pink'; // utilize ddd
-        this.secondaryColor = '--ddd-theme-default-coalyGray'; // utilize ddd
+        // this.secondaryColor = '--ddd-theme-default-coalyGray'; // utilize ddd; may not work
+        this.roundCorner = true;
     }
 
     static get styles() {
@@ -37,9 +38,24 @@ export class MediaImage extends DDD {
                     width: 512px;
                 } */
 
-                :host([roundCorner = true]) img {
+                :host([roundCorner]) img {
                     border-radius: 25px;
                 }
+
+                img:hover {
+                    transform: translate(8px,-8px);
+                    box-shadow: -8px 8px var(--ddd-theme-default-coalyGray);
+                }
+
+                .media-image-container {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+                }
+
+                
 
                 /* how can I incorporate constructor variables into CSS???*/
             `
@@ -48,13 +64,17 @@ export class MediaImage extends DDD {
 
     render() {
         return html`
-            <img src='${this.src}' alt='${this.alt}' class='media-img' 
-            style='
-                width: ${this.width}px;
-                border-style: solid;
-                border-color: var(${this.primaryColor});
-                
-            '>
+            <div class='media-image-container'>
+                <img src='${this.src}' alt='${this.caption}' class='media-img' 
+                style='
+                    width: ${this.width}px;
+                    border-style: solid;
+                    border-width: thick;
+                    border-color: var(${this.primaryColor});
+                    transition: all .3s ease-in;
+                '>
+                <p>${this.caption}</p>
+            </div>
         `
     }
 
@@ -64,21 +84,20 @@ export class MediaImage extends DDD {
         return {
             ...super.properties,
             src: { type: String },
-            alt: { type: String },
             width: { type: Number },
             caption: { type: String },
+            description: { type: String },
             primaryColor: { 
                 type: String,
                 attribute: 'primary-color',
             },
-            secondaryColor: { 
-                type: String,
-                attribute: 'secondary-color',
-            },
+            // secondaryColor: { 
+            //     type: String,
+            //     attribute: 'secondary-color',
+            // },
             roundCorner: {
                 type: Boolean,
-                attribute: 'round-corner',
-                reflect: false,
+                attribute: 'round-corner', // for some reason using this name as the attribute does not work
             }
         }
     }
