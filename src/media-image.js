@@ -1,6 +1,7 @@
 import { DDD } from "@lrnwebcomponents/d-d-d/d-d-d.js";
 import { css, html } from 'lit';
 
+
 /**
  * For use under <hax-image-gallery>
  * https://github.com/elmsln/issues/issues/1946
@@ -20,7 +21,7 @@ export class MediaImage extends DDD {
         this.caption = '';
         this.description = ''
         this.primaryColor = '--ddd-theme-default-original87Pink'; // utilize ddd
-        // this.secondaryColor = '--ddd-theme-default-coalyGray'; // utilize ddd; may not work
+        this.secondaryColor = '--ddd-theme-default-coalyGray'; // utilize ddd; may not work
         this.roundCorner = true;
     }
 
@@ -38,11 +39,11 @@ export class MediaImage extends DDD {
                     width: 512px;
                 } */
 
-                :host([roundCorner]) img {
+                :host([roundCorner]) img, :host([roundCorner]) .img-wrapper {
                     border-radius: 25px;
                 }
 
-                img:hover {
+                .img-wrapper:hover {
                     transform: translate(8px,-8px);
                     box-shadow: -8px 8px var(--ddd-theme-default-coalyGray);
                 }
@@ -55,6 +56,19 @@ export class MediaImage extends DDD {
                     text-align: center;
                 }
 
+                .media-img {
+                    padding: var(--ddd-spacing-1);
+                    border-style: solid;
+                    border-width: var(--ddd-spacing-5);
+                    
+                }
+
+                .img-wrapper {
+                    padding: var(--ddd-spacing-1);
+                    
+                    transition: all .3s ease-in;
+                }
+
                 
 
                 /* how can I incorporate constructor variables into CSS???*/
@@ -64,21 +78,22 @@ export class MediaImage extends DDD {
 
     render() {
         return html`
-            <div class='media-image-container'>
-                <img src='${this.src}' alt='${this.caption}' class='media-img' 
-                style='
-                    width: ${this.width}px;
-                    border-style: solid;
-                    border-width: thick;
-                    border-color: var(${this.primaryColor});
-                    transition: all .3s ease-in;
-                '>
+            <div class='media-image-container' $click=''>
+                <div class='img-wrapper' 
+                    style='
+                        background-color: var(${this.secondaryColor});
+                    '>
+                    <img src='${this.src}' alt='${this.caption}' class='media-img' 
+                    style='
+                        width: ${this.width}px;
+                        background-color: var(${this.secondaryColor});
+                        border-color: var(${this.primaryColor});
+                    '>
+                    </div>
                 <p>${this.caption}</p>
             </div>
         `
     }
-
-    // make methods for adding classes based on attributes, such as width, height, and colors
 
     static get properties() {
         return {
@@ -91,10 +106,10 @@ export class MediaImage extends DDD {
                 type: String,
                 attribute: 'primary-color',
             },
-            // secondaryColor: { 
-            //     type: String,
-            //     attribute: 'secondary-color',
-            // },
+            secondaryColor: { 
+                type: String,
+                attribute: 'secondary-color',
+            },
             roundCorner: {
                 type: Boolean,
                 attribute: 'round-corner', // for some reason using this name as the attribute does not work
