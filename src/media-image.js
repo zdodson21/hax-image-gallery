@@ -1,5 +1,6 @@
 import { DDD } from "@lrnwebcomponents/d-d-d/d-d-d.js";
 import { css, html } from 'lit';
+// import { PlayList } from "@lrnwebcomponents/play-list";
 
 
 /**
@@ -7,6 +8,24 @@ import { css, html } from 'lit';
  * https://github.com/elmsln/issues/issues/1946
  * @author {Zach Dodson}
  */
+
+
+// register globally so we can make sure there is only one
+globalThis.imageCollection = globalThis.imageCollection || {};
+
+// request if this exists. This helps invoke the element existing in the dom
+// as well as that there is only one of them. That way we can ensure everything
+// is rendered through the same modal
+globalThis.imageCollection.requestAvailability = () => {
+  if (!window.imageCollection.instance) {
+    globalThis.imageCollection.instance = document.createElement("image-collection");
+    document.body.appendChild(globalThis.imageCollection.instance);
+  }
+  return globalThis.imageCollection.instance;
+};
+
+export const SimpleModalStore = globalThis.imageCollection.requestAvailability();
+
 
 export class MediaImage extends DDD {
     
@@ -23,6 +42,8 @@ export class MediaImage extends DDD {
         this.primaryColor = '--ddd-theme-default-original87Pink'; // utilize ddd
         this.secondaryColor = '--ddd-theme-default-coalyGray'; // utilize ddd; may not work
         this.roundCorner = true;
+        this.images = [];
+        this.descriptions = [];
     }
 
     static get styles() {
@@ -69,9 +90,29 @@ export class MediaImage extends DDD {
                     transition: all .3s ease-in;
                 }
 
-                
+                .gallery {
+                    display: none;
+                    z-index: 999999;
+                    width: 100%;
+                    height: 100%;
+                    position: fixed;
+                }
 
-                /* how can I incorporate constructor variables into CSS???*/
+                .gallery .top {
+                    display: flex;
+                    height: 10%;
+                }
+
+                .gallery .content {
+                    display: flex;
+                    height: 70%;
+                }
+
+                .gallery .bottom {
+                    text-align: center;
+                    height: 20%;
+                }
+
             `
         ]
     }
@@ -83,7 +124,7 @@ export class MediaImage extends DDD {
                     style='
                         background-color: var(${this.secondaryColor});
                     '>
-                    <img src='${this.src}' alt='${this.caption}' class='media-img' 
+                    <img src='${this.src}' alt='${this.caption}' class='media-img'
                     style='
                         width: ${this.width}px;
                         background-color: var(${this.secondaryColor});
@@ -92,7 +133,31 @@ export class MediaImage extends DDD {
                     </div>
                 <p>${this.caption}</p>
             </div>
+            <div class='gallery'>
+                <div class='top'>
+                    <button id='close-btn'>X</button>
+                </div>
+                <div class='content'>
+                    <!-- <button id='left-btn'><</button> -->
+                    <!-- play-list stuff will go here, need to learn how to implement -->
+                    <!-- <play-list></play-list> -->
+                    <img src="https://media1.tenor.com/m/j5rPRPBwSOMAAAAC/cat-smacking-other-cat-cat.gif" alt="" id='sample-to-remove'>
+                    <!-- <button id='right-btn'>></button> -->
+                </div>
+                <div class='bottom'>
+                    <p>${this.description}</p>
+                </div>
+            </div>
         `
+    }
+
+    mediaImageClicked() {
+        // Makes .gallery visible
+        // Transparency so website can still be seen
+    }
+
+    mediaImageButtonHandler() {
+        // want to write statement that finds the button clicked and finds it's id to identify the function it performs
     }
 
     static get properties() {
