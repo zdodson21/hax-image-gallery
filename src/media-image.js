@@ -1,6 +1,6 @@
 import { DDD } from "@lrnwebcomponents/d-d-d/d-d-d.js";
 import { css, html } from 'lit';
-// import { PlayList } from "@lrnwebcomponents/play-list";
+// import '@lrnwebcomponents/play-list/play-list.js';
 
 
 /**
@@ -93,24 +93,28 @@ export class MediaImage extends DDD {
                 .gallery {
                     display: none;
                     z-index: 999999;
-                    width: 100%;
-                    height: 100%;
+                    /* width: 100%; */
+                    /* height: 100%; */
                     position: fixed;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
                 }
 
                 .gallery .top {
                     display: flex;
-                    height: 10%;
+                    /* height: 10%; */
                 }
 
                 .gallery .content {
                     display: flex;
-                    height: 70%;
+                    /* height: 70%; */
                 }
 
                 .gallery .bottom {
                     text-align: center;
-                    height: 20%;
+                    /* height: 20%; */
                 }
 
             `
@@ -124,7 +128,7 @@ export class MediaImage extends DDD {
                     style='
                         background-color: var(${this.secondaryColor});
                     '>
-                    <img src='${this.src}' alt='${this.caption}' class='media-img'
+                    <img src='${this.src}' alt='${this.caption}' class='media-img' @click=${this.mediaImageClicked}
                     style='
                         width: ${this.width}px;
                         background-color: var(${this.secondaryColor});
@@ -133,16 +137,18 @@ export class MediaImage extends DDD {
                     </div>
                 <p>${this.caption}</p>
             </div>
-            <div class='gallery'>
+            <div class='gallery'> <!-- This might be replaced by image-collection, handled by the singleton above-->
                 <div class='top'>
-                    <button id='close-btn'>X</button>
+                    <button id='close-btn' @click=${this.closeButtonHandler}>X</button>
                 </div>
                 <div class='content'>
-                    <!-- <button id='left-btn'><</button> -->
+                    <button id='left-btn'><</button>
                     <!-- play-list stuff will go here, need to learn how to implement -->
                     <!-- <play-list></play-list> -->
-                    <img src="https://media1.tenor.com/m/j5rPRPBwSOMAAAAC/cat-smacking-other-cat-cat.gif" alt="" id='sample-to-remove'>
-                    <!-- <button id='right-btn'>></button> -->
+                    <div class='images'>
+                        <img src="https://media1.tenor.com/m/j5rPRPBwSOMAAAAC/cat-smacking-other-cat-cat.gif" alt="" id='sample-to-remove'>
+                    </div>
+                    <button id='right-btn'>></button>
                 </div>
                 <div class='bottom'>
                     <p>${this.description}</p>
@@ -151,13 +157,30 @@ export class MediaImage extends DDD {
         `
     }
 
+    imageCollector() {
+        // collects the media-images and will render them in the carousel, possible with an array map or play-list tag when we know how that works
+        // document.querySelectorAll(media-image).forEach((tag) => {
+        //     tag.shadowRoot.
+        // })
+    }
+
     mediaImageClicked() {
         // Makes .gallery visible
         // Transparency so website can still be seen
+        console.log('media image clicked')
+        this.shadowRoot.querySelector('.gallery').style.display = 'block';
     }
 
-    mediaImageButtonHandler() {
-        // want to write statement that finds the button clicked and finds it's id to identify the function it performs
+    closeButtonHandler() {
+        this.shadowRoot.querySelector('.gallery').style.display = 'none';
+    }
+
+    leftButtonHandler() {
+        
+    }
+
+    rightButtonHandler() {
+
     }
 
     static get properties() {
