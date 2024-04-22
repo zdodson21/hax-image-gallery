@@ -205,8 +205,6 @@ export class MediaImage extends DDD {
         })
 
         console.table(this.imageData);
-
-        
     }
 
     static get properties() {
