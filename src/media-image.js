@@ -22,6 +22,7 @@ globalThis.imageCollection.requestAvailability = () => {
     document.body.appendChild(globalThis.imageCollection.instance);
   }
 //   Could try putting for each loop here to collect images and render them in image-collection
+
   return globalThis.imageCollection.instance;
 };
 
@@ -43,8 +44,7 @@ export class MediaImage extends DDD {
         this.primaryColor = '--ddd-theme-default-original87Pink'; // utilize ddd
         this.secondaryColor = '--ddd-theme-default-coalyGray'; // utilize ddd; may not work
         this.roundCorner = true;
-        this.images = [];
-        this.descriptions = [];
+        this.imageData = [];
     }
 
     static get styles() {
@@ -123,7 +123,7 @@ export class MediaImage extends DDD {
 
     render() {
         return html`
-            <div class='media-image-container' $click=''>
+            <div class='media-image-container' @click=${this.imageCollector}>
                 <div class='img-wrapper' 
                     style='
                         background-color: var(${this.secondaryColor});
@@ -166,7 +166,48 @@ export class MediaImage extends DDD {
         this.shadowRoot.querySelector('.img-wrapper').style.boxShadow = null;
     }
 
+    imageCollector(e) {
+        const mediaImage = document.querySelectorAll('media-image');
+        let clickedElement = 0;
+        // let imgID = 0;
+        let foundDesc;
 
+        this.imageData = [];
+
+        mediaImage.forEach((element) => {
+            if (e.target.getAttribute('src') == element.getAttribute('src')) {
+                console.log('Clicked element: ' + clickedElement)
+            } else {
+                clickedElement++;
+            }
+        })
+
+        console.log();
+
+        mediaImage.forEach((element) => {
+            const source = element.getAttribute('src');
+            const caption = element.getAttribute('caption');
+            const description = element.getAttribute('description');
+            
+            if (description == null) {
+                foundDesc = caption;
+            } else {
+                foundDesc = description;
+            }
+            
+            const playlistItem = {
+                src: source,
+                description: foundDesc,
+                // id: imgID,
+            }
+            this.imageData.push(playlistItem)
+            // imgID++;
+        })
+
+        console.table(this.imageData);
+
+        
+    }
 
     static get properties() {
         return {
