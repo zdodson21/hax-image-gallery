@@ -21,6 +21,7 @@ globalThis.imageCollection.requestAvailability = () => {
     globalThis.imageCollection.instance = document.createElement("image-collection");
     document.body.appendChild(globalThis.imageCollection.instance);
   }
+//   Could try putting for each loop here to collect images and render them in image-collection
   return globalThis.imageCollection.instance;
 };
 
@@ -66,7 +67,7 @@ export class MediaImage extends DDD {
 
                 .img-wrapper:hover {
                     transform: translate(8px,-8px);
-                    box-shadow: -8px 8px var(--ddd-theme-default-coalyGray);
+                    /* box-shadow:  */
                 }
 
                 .media-image-container {
@@ -86,11 +87,10 @@ export class MediaImage extends DDD {
 
                 .img-wrapper {
                     padding: var(--ddd-spacing-1);
-                    
                     transition: all .3s ease-in;
                 }
 
-                .gallery {
+                image-collection {
                     display: none;
                     z-index: 999999;
                     /* width: 100%; */
@@ -127,7 +127,9 @@ export class MediaImage extends DDD {
                 <div class='img-wrapper' 
                     style='
                         background-color: var(${this.secondaryColor});
-                    '>
+                        color: var(${this.secondaryColor})
+                    ' @mouseover=${this.hoverImage}
+                    @mouseout=${this.leaveImage}>
                     <img src='${this.src}' alt='${this.caption}' class='media-img' @click=${this.mediaImageClicked}
                     style='
                         width: ${this.width}px;
@@ -137,14 +139,13 @@ export class MediaImage extends DDD {
                     </div>
                 <p>${this.caption}</p>
             </div>
-            <div class='gallery'> <!-- This might be replaced by image-collection, handled by the singleton above-->
+            <!-- <div class='gallery'>
                 <div class='top'>
                     <button id='close-btn' @click=${this.closeButtonHandler}>X</button>
                 </div>
                 <div class='content'>
                     <button id='left-btn'><</button>
-                    <!-- play-list stuff will go here, need to learn how to implement -->
-                    <!-- <play-list></play-list> -->
+                
                     <div class='images'>
                         <img src="https://media1.tenor.com/m/j5rPRPBwSOMAAAAC/cat-smacking-other-cat-cat.gif" alt="" id='sample-to-remove'>
                     </div>
@@ -153,35 +154,19 @@ export class MediaImage extends DDD {
                 <div class='bottom'>
                     <p>${this.description}</p>
                 </div>
-            </div>
+            </div> -->
         `
     }
 
-    imageCollector() {
-        // collects the media-images and will render them in the carousel, possible with an array map or play-list tag when we know how that works
-        // document.querySelectorAll(media-image).forEach((tag) => {
-        //     tag.shadowRoot.
-        // })
+    hoverImage() {
+        this.shadowRoot.querySelector('.img-wrapper').style.boxShadow = "-8px 8px";
     }
 
-    mediaImageClicked() {
-        // Makes .gallery visible
-        // Transparency so website can still be seen
-        console.log('media image clicked')
-        this.shadowRoot.querySelector('.gallery').style.display = 'block';
+    leaveImage() {
+        this.shadowRoot.querySelector('.img-wrapper').style.boxShadow = null;
     }
 
-    closeButtonHandler() {
-        this.shadowRoot.querySelector('.gallery').style.display = 'none';
-    }
 
-    leftButtonHandler() {
-        
-    }
-
-    rightButtonHandler() {
-
-    }
 
     static get properties() {
         return {
