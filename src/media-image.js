@@ -20,8 +20,44 @@ globalThis.imageCollection.requestAvailability = () => {
   if (!window.imageCollection.instance) {
     globalThis.imageCollection.instance = document.createElement("image-collection");
     document.body.appendChild(globalThis.imageCollection.instance);
+   
+    // Adds to image-collection tag
+    const imageDisplay = document.querySelector('image-collection');
+
+    // Create top div
+    const topDiv = document.createElement('div');
+    topDiv.classList.add('top-section');
+    imageDisplay.appendChild(topDiv);
+
+    const closeButton = document.createElement('button');
+    closeButton.innerHTML = 'X';
+    closeButton.id = 'close-btn';
+    topDiv.appendChild(closeButton)
+    // continue by setting button ID and attribute onclick calls function to set visible to none (check youtube video by Bryan)
+
+    // Create middle section
+    const middleDiv = document.createElement('div');
+    middleDiv.classList.add('middle-section');
+    imageDisplay.appendChild(middleDiv);
+
+        // Left button
+        const leftButton = document.createElement('button');
+        leftButton.innerHTML = '<';
+        leftButton.id = 'left-btn';
+        middleDiv.appendChild(leftButton);
+        // Render images
+        
+
+        // Right button
+        const rightButton = document.createElement('button');
+        rightButton.innerHTML = '>';
+        rightButton.id = 'right-btn';
+        middleDiv.appendChild(rightButton);
+
+    // Create description area
+
+
   }
-  // maybe use this to make the playlist tag???
 
   return globalThis.imageCollection.instance;
 };
@@ -161,6 +197,10 @@ export class MediaImage extends DDD {
         this.shadowRoot.querySelector('.img-wrapper').style.boxShadow = null;
     }
 
+    mediaImageClicked() {
+
+    }
+
     imageCollector(e) {
         const mediaImage = document.querySelectorAll('media-image');
         let clickedElement = 0;
@@ -171,7 +211,7 @@ export class MediaImage extends DDD {
 
         mediaImage.forEach((element) => {
             if (e.target.getAttribute('src') == element.getAttribute('src')) {
-                console.log('Clicked element: ' + clickedElement)
+                console.log('Clicked element: ' + clickedElement);
             } else {
                 clickedElement++;
             }
@@ -195,7 +235,7 @@ export class MediaImage extends DDD {
                 description: foundDesc,
                 // id: imgID,
             }
-            this.imageData.push(playlistItem)
+            this.imageData.push(playlistItem);
             // imgID++;
         })
 
