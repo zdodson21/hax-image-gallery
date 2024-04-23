@@ -3,6 +3,7 @@ import { css, html } from 'lit';
 // import '@lrnwebcomponents/play-list/play-list.js';
 
 
+
 /**
  * For use under <hax-image-gallery>
  * https://github.com/elmsln/issues/issues/1946
@@ -20,50 +21,12 @@ globalThis.imageCollection.requestAvailability = () => {
   if (!window.imageCollection.instance) {
     globalThis.imageCollection.instance = document.createElement("image-collection");
     document.body.appendChild(globalThis.imageCollection.instance);
-   
-    // Adds to image-collection tag
-    const imageDisplay = document.querySelector('image-collection');
-
-    // Create top div
-    const topDiv = document.createElement('div');
-    topDiv.classList.add('top-section');
-    imageDisplay.appendChild(topDiv);
-
-    const closeButton = document.createElement('button');
-    closeButton.innerHTML = 'X';
-    closeButton.id = 'close-btn';
-    topDiv.appendChild(closeButton)
-    // continue by setting button ID and attribute onclick calls function to set visible to none (check youtube video by Bryan)
-
-    // Create middle section
-    const middleDiv = document.createElement('div');
-    middleDiv.classList.add('middle-section');
-    imageDisplay.appendChild(middleDiv);
-
-        // Left button
-        const leftButton = document.createElement('button');
-        leftButton.innerHTML = '<';
-        leftButton.id = 'left-btn';
-        middleDiv.appendChild(leftButton);
-        // Render images
-        
-
-        // Right button
-        const rightButton = document.createElement('button');
-        rightButton.innerHTML = '>';
-        rightButton.id = 'right-btn';
-        middleDiv.appendChild(rightButton);
-
-    // Create description area
-
-
   }
 
   return globalThis.imageCollection.instance;
 };
 
 export const SimpleModalStore = globalThis.imageCollection.requestAvailability();
-
 
 export class MediaImage extends DDD {
     
@@ -126,32 +89,7 @@ export class MediaImage extends DDD {
                     transition: all .3s ease-in;
                 }
 
-                image-collection {
-                    display: none;
-                    z-index: 999999;
-                    /* width: 100%; */
-                    /* height: 100%; */
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    bottom: 0;
-                }
-
-                .gallery .top {
-                    display: flex;
-                    /* height: 10%; */
-                }
-
-                .gallery .content {
-                    display: flex;
-                    /* height: 70%; */
-                }
-
-                .gallery .bottom {
-                    text-align: center;
-                    /* height: 20%; */
-                }
+                
 
             `
         ]
@@ -159,9 +97,9 @@ export class MediaImage extends DDD {
 
     render() {
         return html`
-            <div class='media-image-container' @click=${this.imageCollector}>
+            <div class='media-image-container' >
                 <div class='img-wrapper' style='background-color: var(${this.secondaryColor}); color: var(${this.secondaryColor});' @mouseover=${this.hoverImage} @mouseout=${this.leaveImage}>
-                    <img src='${this.src}' alt='${this.caption}' class='media-img' @click=${this.mediaImageClicked}
+                    <img src='${this.src}' alt='${this.caption}' class='media-img' @click=${this.imageCollector}
                     style='
                         width: ${this.width}px;
                         background-color: var(${this.secondaryColor});
@@ -198,7 +136,10 @@ export class MediaImage extends DDD {
     }
 
     mediaImageClicked() {
-
+        // Sets image-collection display to visible
+        const collectionComponent = document.querySelector('image-collection');
+        collectionComponent.value = this.imageData;
+        collectionComponent.style.display = 'block';
     }
 
     imageCollector(e) {
@@ -212,12 +153,11 @@ export class MediaImage extends DDD {
         mediaImage.forEach((element) => {
             if (e.target.getAttribute('src') == element.getAttribute('src')) {
                 console.log('Clicked element: ' + clickedElement);
+                document.querySelector('image-collection').setAttribute('start-point', clickedElement)
             } else {
                 clickedElement++;
             }
         })
-
-        console.log();
 
         mediaImage.forEach((element) => {
             const source = element.getAttribute('src');
@@ -240,6 +180,7 @@ export class MediaImage extends DDD {
         })
 
         console.table(this.imageData);
+        this.mediaImageClicked();
     }
 
     static get properties() {
