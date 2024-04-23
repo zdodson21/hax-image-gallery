@@ -21,7 +21,7 @@ globalThis.imageCollection.requestAvailability = () => {
     globalThis.imageCollection.instance = document.createElement("image-collection");
     document.body.appendChild(globalThis.imageCollection.instance);
   }
-//   Could try putting for each loop here to collect images and render them in image-collection
+  // maybe use this to make the playlist tag???
 
   return globalThis.imageCollection.instance;
 };
@@ -124,12 +124,7 @@ export class MediaImage extends DDD {
     render() {
         return html`
             <div class='media-image-container' @click=${this.imageCollector}>
-                <div class='img-wrapper' 
-                    style='
-                        background-color: var(${this.secondaryColor});
-                        color: var(${this.secondaryColor})
-                    ' @mouseover=${this.hoverImage}
-                    @mouseout=${this.leaveImage}>
+                <div class='img-wrapper' style='background-color: var(${this.secondaryColor}); color: var(${this.secondaryColor});' @mouseover=${this.hoverImage} @mouseout=${this.leaveImage}>
                     <img src='${this.src}' alt='${this.caption}' class='media-img' @click=${this.mediaImageClicked}
                     style='
                         width: ${this.width}px;
@@ -189,7 +184,7 @@ export class MediaImage extends DDD {
             const caption = element.getAttribute('caption');
             const description = element.getAttribute('description');
             
-            if (description == null) {
+            if (description == null) { // if the description attribute is not set, then the playlistItem object will grab the caption instead
                 foundDesc = caption;
             } else {
                 foundDesc = description;
