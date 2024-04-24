@@ -51,7 +51,7 @@ export class MediaImage extends DDD {
             super.styles,
             css`
                 /*               
-                CSS is based around variables / standards of 'Design, Develop, Destroy' (DDD). Styleguide for DDD can be found at the link below:
+                CSS is based around variables / standards of 'Design, Develop, Destroy' (DDD). Style guide for DDD can be found at the link below:
 
                 https://oer.hax.psu.edu/bto108/sites/haxcellence/documentation/ddd 
                 */
@@ -122,8 +122,12 @@ export class MediaImage extends DDD {
     mediaImageClicked() {
         // Sets image-collection display to visible
         const collectionComponent = document.querySelector('image-collection');
+        const initialImage = this.imageData[collectionComponent.getAttribute('start-point')];
         collectionComponent.value = this.imageData;
         collectionComponent.style.display = 'block';
+        console.table(initialImage);
+        // image.setAttribute('src', initialImage.src)
+        this.requestUpdate();
     }
 
     imageCollector(e) {
@@ -131,7 +135,7 @@ export class MediaImage extends DDD {
         let clickedElement = 0;
         let imgID = 0;
         let foundDesc;
-
+        
         this.imageData = [];
 
         mediaImage.forEach((element) => {

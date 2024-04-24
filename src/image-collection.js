@@ -1,7 +1,6 @@
 import { DDD } from "@lrnwebcomponents/d-d-d/d-d-d.js";
 import { css, html } from 'lit';
 
-
 export class ImageCollection extends DDD {
 
     static get tag() {
@@ -12,6 +11,7 @@ export class ImageCollection extends DDD {
         super();
         this.imageArray = [];
         this.startPoint = 0;
+        this.addEventListener('mouseenter', this.loadContent)
     }
 
     static get styles() {
@@ -72,6 +72,7 @@ export class ImageCollection extends DDD {
 
                 .display-description {
                     grid-area: description;
+                    text-align: center;
                 }
 
                 #right-btn {
@@ -98,7 +99,7 @@ export class ImageCollection extends DDD {
                         <button class='direction-btn' id='left-btn' @click=${this.directionBtnHandler}>&#8592</button>
                         ${this.imageArray.filter((singleObject => singleObject.id == this.startPoint)).map((object) => html`
                             <div class='display-image'>
-                                <img src="${object.src}" alt="">
+                                <img src="${object.src}" alt="" class='image'>
                             </div>
                             <p class='display-description'>${object.description}</p>
                         `)}
@@ -119,6 +120,7 @@ export class ImageCollection extends DDD {
     }
 
     directionBtnHandler(e) {
+        this.imageArray = document.querySelector('image-collection').value;
         if (e.target.getAttribute('id') == 'left-btn') {
             console.log('left pressed')
             // this HAS to be moved somewhere else to run after the image is clicked and image-collection opens
@@ -129,7 +131,7 @@ export class ImageCollection extends DDD {
             }
         } else if (e.target.getAttribute('id') == 'right-btn') {
             console.log('right pressed');
-            this.imageArray = document.querySelector('image-collection').value;
+            
             if (this.startPoint < this.imageArray.length - 1) {
                 this.startPoint++;
             }
