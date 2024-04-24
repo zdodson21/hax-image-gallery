@@ -108,22 +108,6 @@ export class MediaImage extends DDD {
                     </div>
                 <p>${this.caption}</p>
             </div>
-            <!-- <div class='gallery'>
-                <div class='top'>
-                    <button id='close-btn' @click=${this.closeButtonHandler}>X</button>
-                </div>
-                <div class='content'>
-                    <button id='left-btn'><</button>
-                
-                    <div class='images'>
-                        <img src="https://media1.tenor.com/m/j5rPRPBwSOMAAAAC/cat-smacking-other-cat-cat.gif" alt="" id='sample-to-remove'>
-                    </div>
-                    <button id='right-btn'>></button>
-                </div>
-                <div class='bottom'>
-                    <p>${this.description}</p>
-                </div>
-            </div> -->
         `
     }
 
@@ -145,7 +129,7 @@ export class MediaImage extends DDD {
     imageCollector(e) {
         const mediaImage = document.querySelectorAll('media-image');
         let clickedElement = 0;
-        // let imgID = 0;
+        let imgID = 0;
         let foundDesc;
 
         this.imageData = [];
@@ -173,10 +157,10 @@ export class MediaImage extends DDD {
             const playlistItem = {
                 src: source,
                 description: foundDesc,
-                // id: imgID,
+                id: imgID,
             }
             this.imageData.push(playlistItem);
-            // imgID++;
+            imgID++;
         })
 
         console.table(this.imageData);

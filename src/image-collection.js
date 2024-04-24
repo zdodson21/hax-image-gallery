@@ -28,8 +28,8 @@ export class ImageCollection extends DDD {
                 }
 
                 .img-collection-wrapper > .flex-item {
-                    width: 50%;
-                    height: 50%;
+                    width: 512px;
+                    height: 512px;
                     border-style: solid;
                     background-color: var(--ddd-theme-default-limestoneGray);
                 }
@@ -37,6 +37,7 @@ export class ImageCollection extends DDD {
                 .top-section {
                     display: flex;
                     justify-content: right;
+                    height: 10%;
                 }
 
                 .top-section > #close-btn {
@@ -46,12 +47,15 @@ export class ImageCollection extends DDD {
                 .bottom-section {
                     display: grid; 
                     grid-template-columns: 36px 1fr 36px; 
-                    grid-template-rows: 0.7fr 0.3fr; 
+                    grid-template-rows: 310px 130px; 
                     gap: 4px 4px; 
                     grid-template-areas: 
                         "left image right"
                         "left description right";
                     margin: var(--ddd-spacing-0) var(--ddd-spacing-2);
+                }
+
+                .direction-button {
                     height: 90%;
                 }
 
@@ -77,6 +81,7 @@ export class ImageCollection extends DDD {
                 .display-image > img {
                     width: 95%;
                     border-radius: 25px;
+                    object-fit: contain
                 }
             `
         ]
@@ -84,17 +89,19 @@ export class ImageCollection extends DDD {
 
     render() {
         return html`
-            <div class='img-collection-wrapper'>
+            <div class='img-collection-wrapper' @focus=${this.loadContent}>
                 <div class='flex-item'>
                     <div class='top-section'>
                         <button id='close-btn' @click=${this.closeBtnHandler}>&#10007</button>
                     </div>
                     <div class='bottom-section'>
                         <button class='direction-btn' id='left-btn' @click=${this.directionBtnHandler}>&#8592</button>
-                        <div class='display-image'>
-                            <img src="https://content.imageresizer.com/images/memes/Kirby-on-chair-meme-10.jpg" alt="">
-                        </div>
-                        <p class='display-description'>Me constantly when the code doesn't do the thing</p>
+                        ${this.imageArray.filter((singleObject => singleObject.id == this.startPoint)).map((object) => html`
+                            <div class='display-image'>
+                                <img src="${object.src}" alt="">
+                            </div>
+                            <p class='display-description'>${object.description}</p>
+                        `)}
                         <button class='direction-btn' id='right-btn' @click=${this.directionBtnHandler}>&#8594</button>
                     </div>
                 </div>
@@ -102,6 +109,10 @@ export class ImageCollection extends DDD {
         `
     }
 
+    loadContent() {
+        this.imageArray = document.querySelector('image-collection').value;
+    }
+    
     closeBtnHandler() {
         this.imageArray = [];
         document.querySelector('image-collection').style.display = 'none';
@@ -111,14 +122,20 @@ export class ImageCollection extends DDD {
         if (e.target.getAttribute('id') == 'left-btn') {
             console.log('left pressed')
             // this HAS to be moved somewhere else to run after the image is clicked and image-collection opens
-            this.imageArray = document.querySelector('image-collection').value;
+            
             console.table(this.imageArray);
-            this.startPoint--;
+            if (this.startPoint > 0) {
+                this.startPoint--;
+            }
         } else if (e.target.getAttribute('id') == 'right-btn') {
             console.log('right pressed');
-            this.startPoint++;
+            this.imageArray = document.querySelector('image-collection').value;
+            if (this.startPoint < this.imageArray.length - 1) {
+                this.startPoint++;
+            }
         }
         console.log('Current index: ' + this.startPoint);
+        this.requestUpdate();
     }
 
     
