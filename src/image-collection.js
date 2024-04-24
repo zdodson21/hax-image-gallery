@@ -2,7 +2,7 @@ import { DDD } from "@lrnwebcomponents/d-d-d/d-d-d.js";
 import { css, html } from 'lit';
 
 export class ImageCollection extends DDD {
-
+    
     static get tag() {
         return 'image-collection';
     }
@@ -11,7 +11,7 @@ export class ImageCollection extends DDD {
         super();
         this.imageArray = [];
         this.startPoint = 0;
-        this.addEventListener('mouseenter', this.loadContent)
+        this.addEventListener('mouseenter', this.loadContent);
     }
 
     static get styles() {
