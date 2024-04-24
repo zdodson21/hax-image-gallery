@@ -28,8 +28,8 @@ export class ImageCollection extends DDD {
                 }
 
                 .img-collection-wrapper > .flex-item {
-                    width: 512px;
-                    height: 512px;
+                    width: 568px;
+                    height: 568px;
                     border-style: solid;
                     background-color: var(--ddd-theme-default-limestoneGray);
                 }
@@ -47,7 +47,7 @@ export class ImageCollection extends DDD {
                 .bottom-section {
                     display: grid; 
                     grid-template-columns: 36px 1fr 36px; 
-                    grid-template-rows: 310px 130px; 
+                    grid-template-rows: 350px 150px; 
                     gap: 4px 4px; 
                     grid-template-areas: 
                         "left image right"
@@ -80,9 +80,9 @@ export class ImageCollection extends DDD {
                 }
 
                 .display-image > img {
-                    width: 95%;
+                    width: 80%;
                     border-radius: 25px;
-                    object-fit: contain
+                    object-fit: contain;
                 }
             `
         ]
@@ -101,7 +101,11 @@ export class ImageCollection extends DDD {
                             <div class='display-image'>
                                 <img src="${object.src}" alt="" class='image'>
                             </div>
-                            <p class='display-description'>${object.description}</p>
+                            <div class='display-description'>
+                                <p>${object.description}</p>
+                                <p>${object.id + 1} / ${this.imageArray.length}</p>
+                            </div>
+                            
                         `)}
                         <button class='direction-btn' id='right-btn' @click=${this.directionBtnHandler}>&#8594</button>
                     </div>
