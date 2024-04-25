@@ -97,14 +97,14 @@ export class MediaImage extends DDD {
 
     render() {
         return html`
-            <div class='media-image-container' >
+            <div class='media-image-container'>
                 <div class='img-wrapper' style='background-color: var(${this.secondaryColor}); color: var(${this.secondaryColor});' @mouseover=${this.hoverImage} @mouseout=${this.leaveImage}>
-                    <img src='${this.src}' alt='${this.caption}' class='media-img' @click=${this.imageCollector}
+                    <img src='${this.src}' alt='${this.caption}' class='media-img' @click=${this.imageCollector} @keypress=${this.imageCollector}
                     style='
                         width: ${this.width}px;
                         background-color: var(${this.secondaryColor});
                         border-color: var(${this.primaryColor});
-                    '>
+                    '  tabindex='0'>
                     </div>
                 <p>${this.caption}</p>
             </div>

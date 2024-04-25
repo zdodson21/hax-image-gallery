@@ -41,7 +41,7 @@ export class ImageCollection extends DDD {
                 }
 
                 .top-section > #close-btn {
-                    margin: var(--ddd-spacing-2)
+                    margin: var(--ddd-spacing-2);
                 }
 
                 .bottom-section {
@@ -90,7 +90,7 @@ export class ImageCollection extends DDD {
 
     render() {
         return html`
-            <div class='img-collection-wrapper' @focus=${this.loadContent}>
+            <dialog class='img-collection-wrapper'>
                 <div class='flex-item'>
                     <div class='top-section'>
                         <button id='close-btn' @click=${this.closeBtnHandler}>&#10007</button>
@@ -105,12 +105,11 @@ export class ImageCollection extends DDD {
                                 <p>${object.description}</p>
                                 <p>${object.id + 1} / ${this.imageArray.length}</p>
                             </div>
-                            
                         `)}
                         <button class='direction-btn' id='right-btn' @click=${this.directionBtnHandler}>&#8594</button>
                     </div>
                 </div>
-            </div>
+            </dialog>
         `
     }
 
@@ -124,7 +123,7 @@ export class ImageCollection extends DDD {
     }
 
     directionBtnHandler(e) {
-        this.imageArray = document.querySelector('image-collection').value;
+        this.loadContent();
         if (e.target.getAttribute('id') == 'left-btn') {
             console.log('left pressed')
             // this HAS to be moved somewhere else to run after the image is clicked and image-collection opens
