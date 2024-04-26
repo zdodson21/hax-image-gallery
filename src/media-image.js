@@ -39,7 +39,7 @@ export class MediaImage extends DDD {
         this.src = '';
         this.width = 512;
         this.caption = '';
-        this.description = ''
+        this.description = '';
         this.primaryColor = '--ddd-theme-default-original87Pink'; // utilize ddd
         this.secondaryColor = '--ddd-theme-default-coalyGray'; // utilize ddd; may not work
         this.roundCorner = true;
@@ -138,6 +138,7 @@ export class MediaImage extends DDD {
         
         this.imageData = [];
 
+        // This loop finds the clicked media-image on the page
         mediaImage.forEach((element) => {
             if (e.target.getAttribute('src') == element.getAttribute('src')) {
                 console.log('Clicked element: ' + clickedElement);
@@ -189,7 +190,7 @@ export class MediaImage extends DDD {
             roundCorner: {
                 type: Boolean,
                 attribute: 'round-corner', // for some reason using this name as the attribute does not work
-            }
+            },
         }
     }
 }
