@@ -25,6 +25,7 @@ export class ImageCollection extends DDD {
                     width: 100%;
                     height: 100%;
                     backdrop-filter: blur(10px);
+                    background-color: rgba(255, 255, 255 , 0.25) // Have to set manual value here instead of DDD, for transparency of only the background of the dialog
                 }
 
                 .img-collection-wrapper > .flex-item {
