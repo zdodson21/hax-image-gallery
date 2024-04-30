@@ -3,6 +3,8 @@ import { css, html } from 'lit';
 
 export class ImageCollection extends DDD {
     
+    // Test new branch
+
     static get tag() {
         return 'image-collection';
     }
